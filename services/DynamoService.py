@@ -1,7 +1,7 @@
 import os
 import boto3
 from pydantic import BaseModel
-from typing import List
+from typing import List, Optional
 
 class DynamoService():
     """
@@ -15,18 +15,31 @@ class DynamoService():
         self.table = dynamodb.Table(self.table_name)
         self.model = model
 
-    def get(self, item: dict) -> dict:
+    def get(self, item: dict) -> Optional[BaseModel]:
         """
         Reads item from dynamo db table with item as dict: {primary_key: value_to_search}
+
+        From Boto3 Documentation: The GetItem operation returns a set of attributes for 
+        the item with the given primary key. If there is no matching item, GetItem does 
+        not return any data and there will be no Item element in the response.
+
+        Returns item in BaseModel form, or empty dict if item not found
         """
         try:
             print(f"Reading from {self.table_name}...")
             response = self.table.get_item(
-                Key=item.dict()
+                Key=item
             )
-            return response['Item']
-        except:
-            raise Exception(f"Failed to read from {self.table_name}")
+            if response.get('Item'):
+
+                print(f'Retrieved data from {self.table_name}')
+                return self.model(**response['Item'])
+            else:
+                print(f'No match found for key(s): {item}')
+                return None
+            
+        except Exception as e:
+            raise Exception(f"Failed to read from {self.table_name}. Exception: {e}")
         
 
     def put(self, item: BaseModel) -> dict:
