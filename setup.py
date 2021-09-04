@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
     # Needed to silence warnings (and to be a worthwhile package)
     name='AWS Services',
-    url='',
+    url='https://github.com/mclark/aws_services',
     author='Michael Clark',
     author_email='michaeldavidclark13@gmail.com',
     # Needed to actually package something
