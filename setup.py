@@ -2,12 +2,12 @@ from setuptools import setup
 
 setup(
     # Needed to silence warnings (and to be a worthwhile package)
-    name='aws_services',
+    name='services',
     url='https://github.com/flight-visualizer/common_dependencies',
     author='Michael Clark',
     author_email='michaeldavidclark13@gmail.com',
     # Needed to actually package something
-    packages=['aws_services'],
+    packages=['services'],
     # Needed for dependencies
     install_requires=['pydantic'],
     # *strongly* suggested for sharing
