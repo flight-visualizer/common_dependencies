@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     # Needed to silence warnings (and to be a worthwhile package)
-    name='AWS Services',
+    name='aws_services',
     url='https://github.com/flight-visualizer/common_dependencies',
     author='Michael Clark',
     author_email='michaeldavidclark13@gmail.com',
