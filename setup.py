@@ -12,7 +12,7 @@ setup(
     # Needed for dependencies
     install_requires=['pydantic', 'requests'],
     # *strongly* suggested for sharing
-    version='0.1.3',
+    version='0.1.4',
     # The license can be anything you like
     license='MIT',
     description='',
