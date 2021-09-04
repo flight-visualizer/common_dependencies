@@ -11,7 +11,7 @@ class RequestService():
         self.params = params
         self.responseModel = responseModel
 
-    def query(self):
+    def query(self) -> BaseModel:
 
         try:
             print(f'Attempting to query data...')
@@ -21,7 +21,7 @@ class RequestService():
             )
             print(f'Response received... status: {response.status_code}')
 
-            response = self.responseModel(**response.json())
+            return self.responseModel(**response.json())
 
         except:
             print('Error querying aviation stack...')
