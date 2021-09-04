@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 
 setup(
     # Needed to silence warnings (and to be a worthwhile package)
@@ -7,6 +7,8 @@ setup(
     author='Michael Clark',
     author_email='michaeldavidclark13@gmail.com',
     # Needed to actually package something
+    packages=['services'],
+    py_modules=['DynamoService', 'RequestService'],
     # Needed for dependencies
     install_requires=['pydantic', 'requests'],
     # *strongly* suggested for sharing
@@ -16,6 +18,5 @@ setup(
     description='',
     # We will also need a readme eventually (there will be a warning)
     # long_description=open('README.txt').read(),
-    packages=find_packages(),
-    py_modules=['DynamoService', 'RequestService']
+    
 )
