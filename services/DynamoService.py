@@ -20,7 +20,7 @@ class DynamoService():
         Reads item from dynamo db table with item as dict: {primary_key: value_to_search}
         """
         try:
-            print(f"Reading from {self.table_name}")
+            print(f"Reading from {self.table_name}...")
             response = self.table.get_item(
                 Key=item.dict()
             )
@@ -54,6 +54,7 @@ class DynamoService():
         )
 
         try:
+            print(f"Writing {initial_count} itmes to {self.table_name}...")
             with self.table.batch_writer() as batch:
                 for item in items:
                     batch.put_item(

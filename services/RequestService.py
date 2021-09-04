@@ -14,7 +14,7 @@ class RequestService():
     def query(self) -> BaseModel:
 
         try:
-            print(f'Attempting to query data...')
+            print(f'Attempting to query endpoint: {self.endpoint}...')
             response = requests.get(
                 self.endpoint, 
                 params=self.params
@@ -23,6 +23,5 @@ class RequestService():
 
             return self.responseModel(**response.json())
 
-        except:
-            print('Error querying aviation stack...')
-            raise
+        except Exception as e:
+            raise Exception(f'Error querying aviation stack: {e}')
