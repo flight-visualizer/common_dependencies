@@ -8,11 +8,11 @@ setup(
     author_email='michaeldavidclark13@gmail.com',
     # Needed to actually package something
     packages=find_packages(),
-    py_modules=['DynamoService', 'RequestService'],
+    py_modules=['DynamoService', 'HttpClient'],
     # Needed for dependencies
     install_requires=['pydantic', 'requests'],
     # *strongly* suggested for sharing
-    version='0.1.4',
+    version='0.1.5',
     # The license can be anything you like
     license='MIT',
     description='',
