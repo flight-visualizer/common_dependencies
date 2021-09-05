@@ -8,12 +8,13 @@ class DynamoService():
     Class for reading and writing from a dynamo table
     """
     
-    def __init__(self, table_name: str, model: BaseModel):
+    def __init__(self, table_name: str, model: BaseModel, ttl: int = None):
         self.table_name = table_name
         self.region = os.getenv('AWS_REGION')
         dynamodb = boto3.resource('dynamodb', region_name = self.region)
         self.table = dynamodb.Table(self.table_name)
         self.model = model
+        self.ttl = ttl
 
     def get(self, item: dict) -> Optional[BaseModel]:
         """
@@ -33,7 +34,7 @@ class DynamoService():
             if response.get('Item'):
 
                 print(f'Retrieved data from {self.table_name}')
-                return self.model(**response['Item'])
+                return self.model(**response['Item'][0])
             else:
                 print(f'No match found for key(s): {item}')
                 return None
@@ -52,7 +53,14 @@ class DynamoService():
         )
 
         try:
-            return self.table.put_item(Item=item.dict())
+            print(f"Writing item to {self.table_name}...")
+            payload = item.dict()
+            if self.ttl:
+                payload.update({'ttl': self.ttl})    
+            write_status = self.table.put_item(Item=payload)
+
+            print(f'Status: {write_status}')
+            return write_status
         except Exception as e:
             raise Exception(f'Error writing item: {item} to table: {e}')
 
@@ -67,7 +75,7 @@ class DynamoService():
         )
 
         try:
-            print(f"Writing {initial_count} itmes to {self.table_name}...")
+            print(f"Writing {initial_count} items to {self.table_name}...")
             with self.table.batch_writer() as batch:
                 for item in items:
                     batch.put_item(
